@@ -7,7 +7,7 @@ export class OpenaiService {
 
     async getImage(): Promise<string> {
         const response = await this.openai.createImage({
-            prompt: "an ogre with red skin",
+            prompt: "an ogre with red skin and blue eyes and white hair",
             n: 1,
             size: "1024x1024",
         });
