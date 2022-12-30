@@ -15,8 +15,7 @@ contract AiNFT is ERC721A, Ownable {
     uint256 public maxNFT = 555;
     bool metadataLocked = false;
 
-    constructor() ERC721A("Ai Nft", "AINFT") {
-    }
+    constructor() ERC721A("Ai Nft", "AINFT") {}
 
     function mint(uint256 quantity) external payable {
         require(_totalMinted() + quantity <= maxNFT,"not enough NFT to mint");
