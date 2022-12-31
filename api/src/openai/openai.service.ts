@@ -12,8 +12,10 @@ export class OpenaiService {
     }
 
     async generateImage(generateImageDto: GenerateImageDto): Promise<string> {
+        let prompt = `a legendary ${generateImageDto.class}, ${generateImageDto.eyes} eyes, ${generateImageDto.hair} hair, epic and abstract style`;
+        console.log(prompt);
         const response = await this.openAIApi.createImage({
-            prompt: `an abstract style ${generateImageDto.color} ${generateImageDto.class} that has ${generateImageDto.eyes} eyes and ${generateImageDto.hair} hair`,
+            prompt: prompt,
             n: 1,
             size: "1024x1024",
         });

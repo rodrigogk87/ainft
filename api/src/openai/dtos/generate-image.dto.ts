@@ -8,10 +8,6 @@ export class GenerateImageDto {
 
     @ApiProperty()
     @IsNotEmpty()
-    color: string;
-
-    @ApiProperty()
-    @IsNotEmpty()
     eyes: string;
 
     @ApiProperty()
