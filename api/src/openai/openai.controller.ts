@@ -7,7 +7,7 @@ export class OpenaiController {
   constructor(private readonly openaiService: OpenaiService) { }
 
   @Post('generate-image')
-  getImage(@Body() generateImageDto: GenerateImageDto): Promise<string> {
+  getImage(@Body() generateImageDto: GenerateImageDto): Promise<string[]> {
     return this.openaiService.generateImage(generateImageDto);
   }
 }
