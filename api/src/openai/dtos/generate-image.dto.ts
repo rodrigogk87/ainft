@@ -13,4 +13,8 @@ export class GenerateImageDto {
     @ApiProperty()
     @IsNotEmpty()
     hair: string;
+
+    @ApiProperty()
+    @IsNotEmpty()
+    numberOfImages: number;
 }
