@@ -8,8 +8,6 @@ export class ImagesController {
 
   @Post('generate-images')
   async getImage(@Body() generateImageDto: GenerateImageDto): Promise<any> {
-    //should save them on ipfs and return hash (maybe another module like generateImage module)
-    const images = await this.imagesService.generateImages(generateImageDto);
-    return images;
+    return await this.imagesService.generateImages(generateImageDto);
   }
 }

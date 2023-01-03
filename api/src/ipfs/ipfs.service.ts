@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import axios from 'axios';
 import { create } from "ipfs-http-client";
 
 
@@ -19,7 +20,10 @@ export class IpfsService {
             },
         }
         )
-        const { cid } = await ipfs.add(url)
+        const response = await axios.get(url, { responseType: 'arraybuffer' })
+        const buffer = Buffer.from(response.data, "utf-8")
+
+        const { cid } = await ipfs.add(buffer)
         return cid;
     }
 }

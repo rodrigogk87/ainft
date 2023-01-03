@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import axios from 'axios';
 import { IpfsService } from 'src/ipfs/ipfs.service';
 import { OpenaiService } from 'src/openai/openai.service';
 import { GenerateImageDto } from './dtos/generate-image.dto';
@@ -16,14 +17,14 @@ export class ImagesService {
         //generate images
         const prompt = `a legendary ${generateImageDto.class}, ${generateImageDto.eyes} eyes, ${generateImageDto.hair} hair, epic and abstract style`;
 
-        //const response = await this.openAiService.generateImages(generateImageDto);
+        const imageUrl = await this.openAiService.generateImage(generateImageDto);
 
         //store them on ipfs
         //let hashes = await response?.map(async element => { return await this.storeImage(element) });
 
-        let hashes = await this.storeImage(prompt);
+        let hash = await this.storeImage(imageUrl);
 
-        return hashes;
+        return hash;
     }
 
     async storeImage(url: string) {
