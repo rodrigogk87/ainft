@@ -13,4 +13,4 @@ It is the API responsable of generating the images interacting with openia and s
 
 ### Node Script
 Its a script that will check if any NFT has not been provided with its URL (URL must be set by admin accounts because nfts are on-demand, so clients 
-can set the urls for security reasons)
+can set the urls for security reasons), and if not, it will call the API to generate the image url and metadata (json hash), and then it will call the contract to set the token url.
