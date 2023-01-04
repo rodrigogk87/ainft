@@ -28,7 +28,7 @@ export class ImagesService {
 
     async storeImage(url: string) {
         console.log(url);
-        let cid = await this.IPFSServvice.upload(url);
+        let cid = await this.IPFSServvice.uploadFileFromUrl(url);
         console.log(cid);
         return cid;
     }

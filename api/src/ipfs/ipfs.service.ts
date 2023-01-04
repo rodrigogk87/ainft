@@ -7,7 +7,7 @@ import { create } from "ipfs-http-client";
 export class IpfsService {
 
 
-    async upload(url: string): Promise<any> {
+    async uploadFileFromUrl(url: string): Promise<any> {
         const projectId = process.env.INFURA_PROJECT_ID;
         const projectSecret = process.env.INFURA_API_SECRET;
         const auth =
