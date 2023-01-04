@@ -31,7 +31,9 @@ function App() {
 
       axios.post(baseURL + '/openai/generate-images', data)
         .then(function (response) {
-          setImage(response.data[0]);
+          //mint here, image should have been stored
+          //setImage(response.data[0]);
+
         })
         .catch(function (error) {
           console.log(error);
