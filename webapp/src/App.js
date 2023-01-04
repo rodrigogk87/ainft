@@ -5,7 +5,7 @@ import AINFTs from './artifacts/contracts/Ainft.sol/AINFT.json';
 
 const baseURL = "http://localhost:3000";
 
-const NFT_ADDRESS = "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9";
+const NFT_ADDRESS = "0x3Aa5ebB10DC797CAC828524e59A333d0A371443c";
 
 function App() {
 
@@ -41,10 +41,18 @@ function App() {
       const contract = new ethers.Contract(NFT_ADDRESS, AINFTs.abi, signer);
 
       //preform transaction
-      const transaction = await contract.mint({ value: ethers.utils.parseUnits("0.005", "ether") });
-      let tx = await transaction.wait();
+      const mint_transaction = await contract.mint({ value: ethers.utils.parseUnits("0.005", "ether") });
+      let tx = await mint_transaction.wait();
 
       console.log("minted", tx);
+
+      //preform transaction (get all tokens)
+      const get_all_tokens_transaction = await contract.getAllTokens();
+      console.log(get_all_tokens_transaction);
+
+      //preform transaction (get owner of token)
+      const get_token_owner_transaction = await contract.ownerOf(0);
+      console.log(get_token_owner_transaction);
 
       /*
       data.numberOfImages = 1;
