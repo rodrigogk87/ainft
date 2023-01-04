@@ -23,7 +23,7 @@ export class ImagesService {
         const hash = await this.storeImage(imageUrl);
         const createdImage = new this.imageModel({ prompt, hash });
 
-        return createdImage.save();;
+        return createdImage.save();
     }
 
     async storeImage(url: string) {

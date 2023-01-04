@@ -5,7 +5,7 @@ import AINFTs from './artifacts/contracts/Ainft.sol/AINFT.json';
 
 const baseURL = "http://localhost:3000";
 
-const NFT_ADDRESS = "0x5fbdb2315678afecb367f032d93f642f64180aa3";
+const NFT_ADDRESS = "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9";
 
 function App() {
 

@@ -24,7 +24,7 @@ contract AINFT is ERC721URIStorage, Ownable {
     }
 
     function getTokenPrompt(uint256 _tokenId)
-        internal
+        public
         virtual
         returns (string memory)
     {
@@ -32,16 +32,14 @@ contract AINFT is ERC721URIStorage, Ownable {
     }
 
     function setTokenPrompt(uint256 _tokenId, string memory _tokenPrompt)
-        internal
-        virtual
+        public
         onlyOwner
     {
         prompts[_tokenId] = _tokenPrompt;
     }
 
     function setTokenURI(uint256 _tokenId, string memory _tokenURI)
-        internal
-        virtual
+        public
         onlyOwner
     {
         _setTokenURI(_tokenId, _tokenURI);
