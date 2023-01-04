@@ -1,8 +1,11 @@
 import './App.css';
-import axios from "axios";
 import { useState, useEffect } from 'react';
+import { ethers } from 'ethers';
+import AINFTs from './artifacts/contracts/Ainft.sol/AINFT.json';
 
 const baseURL = "http://localhost:3000";
+
+const NFT_ADDRESS = "0x5fbdb2315678afecb367f032d93f642f64180aa3";
 
 function App() {
 
@@ -15,6 +18,10 @@ function App() {
     //});
   }, [data]);
 
+  const requestAccount = async () => {
+    await window.ethereum.request({ method: 'eth_requestAccounts' });
+  }
+
   const onSelect = (e) => {
     console.log(e);
     setData({
@@ -23,12 +30,24 @@ function App() {
     });
   }
 
-  const mint = () => {
+  const mint = async () => {
     if (data?.class && data?.eyes && data?.hair) {
+      //ethereum is usable, get reference to the contract
+      await requestAccount();
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+      //signer needed for transaction that changes state
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(NFT_ADDRESS, AINFTs.abi, signer);
+
+      //preform transaction
+      const transaction = await contract.mint({ value: ethers.utils.parseUnits("0.005", "ether") });
+      let tx = await transaction.wait();
+
+      console.log("minted", tx);
+
+      /*
       data.numberOfImages = 1;
-
-      console.log("minted");
-
       axios.post(baseURL + '/openai/generate-images', data)
         .then(function (response) {
           //mint here, image should have been stored
@@ -37,7 +56,7 @@ function App() {
         })
         .catch(function (error) {
           console.log(error);
-        });
+        });*/
     }
   }
 

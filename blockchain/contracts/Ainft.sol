@@ -11,6 +11,7 @@ contract AINFT is ERC721URIStorage, Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
     uint256 public price = 0.005 ether;
+    mapping(uint256 => string) prompts;
 
     constructor() ERC721("AINFTs", "AINFT") {}
 
@@ -22,13 +23,22 @@ contract AINFT is ERC721URIStorage, Ownable {
         _mint(msg.sender, newItemId_);
     }
 
-    /**
-     * @dev Sets `_tokenURI` as the tokenURI of `tokenId`.
-     *
-     * Requirements:
-     *
-     * - `tokenId` must exist.
-     */
+    function getTokenPrompt(uint256 _tokenId)
+        internal
+        virtual
+        returns (string memory)
+    {
+        return prompts[_tokenId];
+    }
+
+    function setTokenPrompt(uint256 _tokenId, string memory _tokenPrompt)
+        internal
+        virtual
+        onlyOwner
+    {
+        prompts[_tokenId] = _tokenPrompt;
+    }
+
     function setTokenURI(uint256 _tokenId, string memory _tokenURI)
         internal
         virtual
