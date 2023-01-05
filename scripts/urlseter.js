@@ -47,7 +47,9 @@ async function callContract() {
                     console.log(response);
                     //mint here, image should have been stored
                     //setImage(response.data[0]);
-                    await contractWithSigner.setTokenURI(token_id, response.data);
+                    const url_transaction = await contractWithSigner.setTokenURI(token_id, response.data);
+                    let tx = await url_transaction.wait();
+                    console.log(tx);
                 })
                 .catch(function (error) {
                     console.log(error);
