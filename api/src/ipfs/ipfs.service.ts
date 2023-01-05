@@ -26,4 +26,22 @@ export class IpfsService {
         const { cid } = await ipfs.add(buffer)
         return cid;
     }
+
+    async uploadFileFromData(data: string): Promise<any> {
+        const projectId = process.env.INFURA_PROJECT_ID;
+        const projectSecret = process.env.INFURA_API_SECRET;
+        const auth =
+            'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64');
+
+        const ipfs = await create({
+            host: 'ipfs.infura.io', port: 5001, protocol: 'https',
+            headers: {
+                authorization: auth,
+            },
+        }
+        )
+
+        const { cid } = await ipfs.add(Buffer.from(data))
+        return cid;
+    }
 }

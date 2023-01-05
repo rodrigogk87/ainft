@@ -48,7 +48,10 @@ function App() {
 
       //preform transaction (get all tokens)
       const get_all_tokens_transaction = await contract.getAllTokens();
-      console.log(get_all_tokens_transaction);
+
+      get_all_tokens_transaction.forEach(element => {
+        console.log(element.toNumber());
+      });
 
       //preform transaction (get owner of token)
       const get_token_owner_transaction = await contract.ownerOf(0);

@@ -1,7 +1,10 @@
 
 const { ethers } = require("ethers");
 const AINFTs = require('./artifacts/contracts/Ainft.sol/AINFT.json');
+const axios = require('axios');
 require('dotenv').config()
+
+
 // If you don't specify a //url//, Ethers connects to the default 
 // (i.e. ``http:/\/localhost:8545``)
 const provider = new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545");
@@ -12,6 +15,9 @@ const provider = new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545");
 //const signer = provider.getSigner();
 const signer = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
 
+
+//base api url
+const baseURL = "http://localhost:3000";
 
 
 async function init() {
@@ -28,8 +34,25 @@ async function callContract() {
     const contract = new ethers.Contract(address, AINFTs.abi, provider);
     const contractWithSigner = contract.connect(signer);
 
+    let tokens = await contract.getAllTokens();
+
+    //call api and set url if token url==""
+    await axios.get(baseURL + '/images/generate-images')
+        .then(function (response) {
+            console.log(response);
+            //mint here, image should have been stored
+            //setImage(response.data[0]);
+
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+    tokens.forEach(token_id => {
+
+    });
     let tokenUri = await contract.tokenURI(0);
-    await contractWithSigner.setTokenURI(0, 'shshhsjjs');
+    await contractWithSigner.setTokenURI(0, '');
 
     console.log(tokenUri);
 }

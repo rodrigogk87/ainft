@@ -16,21 +16,30 @@ export class ImagesService {
     @InjectModel("Image")
     private imageModel: Model<ImageDocument>;
 
-    async generateImages(generateImageDto: GenerateImageDto): Promise<Image> {
+    async generateMetadata(): Promise<any> {
+        const image = await this.generateImage();
+        const metadata = JSON.stringify({ description: "Random generated AINFT", image: "ipfs://" + image.hash, name: "Name", "attributes": [] });
+        let cid = await this.IPFSServvice.uploadFileFromData(metadata);
+        console.log(cid);
+        return cid;
+    }
+
+    private async generateImage(): Promise<Image> {
         //generate images
-        const prompt = `a legendary ${generateImageDto.class}, ${generateImageDto.eyes} eyes, ${generateImageDto.hair} hair, epic and abstract style`;
-        const imageUrl = await this.openAiService.generateImage(generateImageDto);
-        const hash = await this.storeImage(imageUrl);
+        const { url, prompt } = await this.openAiService.generateImage();
+        const hash = await this.storeImage(url);
         const createdImage = new this.imageModel({ prompt, hash });
 
         return createdImage.save();
     }
 
-    async storeImage(url: string) {
+    private async storeImage(url: string) {
         console.log(url);
         let cid = await this.IPFSServvice.uploadFileFromUrl(url);
         console.log(cid);
         return cid;
     }
+
+
 
 }
