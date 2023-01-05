@@ -5,7 +5,7 @@ import AINFTs from './artifacts/contracts/Ainft.sol/AINFT.json';
 
 const baseURL = "http://localhost:3000";
 
-const NFT_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+const NFT_ADDRESS = "0x2b9d6E6e68073E270e19666DF097e8C9beB6Fb07";
 
 function App() {
 
@@ -31,48 +31,48 @@ function App() {
   }
 
   const mint = async () => {
-    if (data?.class && data?.eyes && data?.hair) {
-      //ethereum is usable, get reference to the contract
-      await requestAccount();
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
+    //ethereum is usable, get reference to the contract
+    await requestAccount();
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
 
-      //signer needed for transaction that changes state
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(NFT_ADDRESS, AINFTs.abi, signer);
+    //signer needed for transaction that changes state
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(NFT_ADDRESS, AINFTs.abi, signer);
 
-      //preform transaction
-      const mint_transaction = await contract.mint({ value: ethers.utils.parseUnits("0.005", "ether") });
-      let tx = await mint_transaction.wait();
+    //preform transaction
+    const mint_transaction = await contract.mint({ value: ethers.utils.parseUnits("0.005", "ether") });
+    let tx = await mint_transaction.wait();
 
-      console.log("minted", tx);
+    console.log("minted", tx);
 
-      //preform transaction (get all tokens)
-      const get_all_tokens_transaction = await contract.getAllTokens();
+    /*
+    //preform transaction (get all tokens)
+    const get_all_tokens_transaction = await contract.getAllTokens();
 
-      get_all_tokens_transaction.forEach(element => {
-        console.log(element.toNumber());
-      });
-
-      //preform transaction (get owner of token)
-      const get_token_owner_transaction = await contract.ownerOf(0);
-      console.log(get_token_owner_transaction);
-
+    get_all_tokens_transaction.forEach(async element => {
+      console.log(element.toNumber());
       //preform transaction (get token uri)
-      const get_token_uri = await contract.tokenURI(0);
-      console.log(get_token_uri == '');
+      const get_token_uri = await contract.tokenURI(element);
+      console.log(get_token_uri);
+    });
 
-      /*
-      data.numberOfImages = 1;
-      axios.post(baseURL + '/openai/generate-images', data)
-        .then(function (response) {
-          //mint here, image should have been stored
-          //setImage(response.data[0]);
+    //preform transaction (get owner of token)
+    const get_token_owner_transaction = await contract.ownerOf(0);
+    console.log(get_token_owner_transaction);
+    */
 
-        })
-        .catch(function (error) {
-          console.log(error);
-        });*/
-    }
+
+    /*
+    data.numberOfImages = 1;
+    axios.post(baseURL + '/openai/generate-images', data)
+      .then(function (response) {
+        //mint here, image should have been stored
+        //setImage(response.data[0]);
+
+      })
+      .catch(function (error) {
+        console.log(error);
+      });*/
   }
 
   return (
