@@ -7,7 +7,7 @@ require('dotenv').config()
 
 // If you don't specify a //url//, Ethers connects to the default 
 // (i.e. ``http:/\/localhost:8545``)
-const provider = new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545");
+const provider = new ethers.providers.JsonRpcProvider(`https://eth-goerli.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`);
 
 // The provider also allows signing transactions to
 // send ether and pay to change state within the blockchain.
@@ -28,7 +28,7 @@ async function init() {
 
 async function callContract() {
     // You can also use an ENS name for the contract address
-    const address = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+    const address = "0x2b9d6E6e68073E270e19666DF097e8C9beB6Fb07";
 
     // The Contract object
     const contract = new ethers.Contract(address, AINFTs.abi, provider);
