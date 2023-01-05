@@ -36,25 +36,21 @@ async function callContract() {
 
     let tokens = await contract.getAllTokens();
 
-    //call api and set url if token url==""
-    await axios.get(baseURL + '/images/generate-images')
-        .then(function (response) {
-            console.log(response);
-            //mint here, image should have been stored
-            //setImage(response.data[0]);
 
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
 
-    tokens.forEach(token_id => {
-
+    tokens.forEach(async token_id => {
+        //call api and set url if token url==""
+        await axios.get(baseURL + '/images/generate-metadata')
+            .then(async function (response) {
+                console.log(response);
+                //mint here, image should have been stored
+                //setImage(response.data[0]);
+                await contractWithSigner.setTokenURI(token_id, response.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     });
-    let tokenUri = await contract.tokenURI(0);
-    await contractWithSigner.setTokenURI(0, '');
-
-    console.log(tokenUri);
 }
 
 init();

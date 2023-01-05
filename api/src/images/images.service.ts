@@ -21,7 +21,7 @@ export class ImagesService {
         const metadata = JSON.stringify({ description: "Random generated AINFT", image: "ipfs://" + image.hash, name: "Name", "attributes": [] });
         let cid = await this.IPFSServvice.uploadFileFromData(metadata);
         console.log(cid);
-        return cid;
+        return cid.toString();
     }
 
     private async generateImage(): Promise<Image> {
