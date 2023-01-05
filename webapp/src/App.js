@@ -5,7 +5,7 @@ import AINFTs from './artifacts/contracts/Ainft.sol/AINFT.json';
 
 const baseURL = "http://localhost:3000";
 
-const NFT_ADDRESS = "0x3Aa5ebB10DC797CAC828524e59A333d0A371443c";
+const NFT_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
 function App() {
 
@@ -53,6 +53,10 @@ function App() {
       //preform transaction (get owner of token)
       const get_token_owner_transaction = await contract.ownerOf(0);
       console.log(get_token_owner_transaction);
+
+      //preform transaction (get token uri)
+      const get_token_uri = await contract.tokenURI(0);
+      console.log(get_token_uri == '');
 
       /*
       data.numberOfImages = 1;
