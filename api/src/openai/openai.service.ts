@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { Configuration, OpenAIApi } from "openai";
-import { GenerateImageDto } from '../images/dtos/generate-image.dto';
-
 @Injectable()
 export class OpenaiService {
 
