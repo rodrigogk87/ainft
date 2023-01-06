@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Configuration, OpenAIApi } from "openai";
-import { ATTRIBUTES } from 'src/constants/Attributes.enum';
+import { ATTRIBUTES } from 'src/constants/attributes.const';
 import IAttributes from 'src/interfaces/IAttributes.interface';
 @Injectable()
 export class OpenaiService {
