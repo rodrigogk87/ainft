@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Configuration, OpenAIApi } from "openai";
+import { ATTRIBUTES } from 'src/constants/Attributes.enum';
+import IAttributes from 'src/interfaces/IAttributes.interface';
 @Injectable()
 export class OpenaiService {
 
@@ -24,42 +26,13 @@ export class OpenaiService {
     }
 
 
-    getRandomAttributes(): any {
-        const title = [
-            'god',
-            'ancient',
-            'futuristic',
-            '',
-        ];
-        const classes = [
-            'orc',
-            'troll',
-            'angel',
-            'fallen angel',
-            'minotaur',
-            'fenix'
-        ];
-        const eyes = [
-            'blue',
-            'red',
-            'green',
-            'yellow',
-            'black'
-        ]
-
-        const hair = [
-            'black',
-            'red',
-            'green',
-            'blue',
-            'white'
-        ]
+    getRandomAttributes(): IAttributes {
 
         const attributes = {
-            class: classes[Math.floor(Math.random() * classes.length)],
-            eyes: eyes[Math.floor(Math.random() * eyes.length)],
-            hair: hair[Math.floor(Math.random() * hair.length)],
-            title: title[Math.floor(Math.random() * title.length)],
+            class: ATTRIBUTES.classes[Math.floor(Math.random() * ATTRIBUTES.classes.length)],
+            eyes: ATTRIBUTES.eyes[Math.floor(Math.random() * ATTRIBUTES.eyes.length)],
+            hair: ATTRIBUTES.hair[Math.floor(Math.random() * ATTRIBUTES.hair.length)],
+            title: ATTRIBUTES.title[Math.floor(Math.random() * ATTRIBUTES.title.length)],
         };
 
         return attributes;
