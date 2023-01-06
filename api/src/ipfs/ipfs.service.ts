@@ -7,7 +7,7 @@ import { create } from "ipfs-http-client";
 export class IpfsService {
 
 
-    async uploadFileFromUrl(url: string): Promise<any> {
+    async uploadFileFromUrl(url: string): Promise<string> {
         const projectId = process.env.INFURA_PROJECT_ID;
         const projectSecret = process.env.INFURA_API_SECRET;
         const auth =
@@ -24,10 +24,10 @@ export class IpfsService {
         const buffer = Buffer.from(response.data, "utf-8")
 
         const { cid } = await ipfs.add(buffer)
-        return cid;
+        return cid.toString();
     }
 
-    async uploadFileFromData(data: string): Promise<any> {
+    async uploadFileFromData(data: string): Promise<string> {
         const projectId = process.env.INFURA_PROJECT_ID;
         const projectSecret = process.env.INFURA_API_SECRET;
         const auth =
@@ -42,6 +42,6 @@ export class IpfsService {
         )
 
         const { cid } = await ipfs.add(Buffer.from(data))
-        return cid;
+        return cid.toString();
     }
 }

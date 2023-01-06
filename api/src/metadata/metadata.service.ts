@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import IOpenAImage from 'src/interfaces/IOpenAImage.interface';
 import { IpfsService } from 'src/ipfs/ipfs.service';
 import { OpenaiService } from 'src/openai/openai.service';
 
@@ -10,44 +11,35 @@ export class MetadataService {
     @Inject(IpfsService)
     private readonly IPFSServvice: IpfsService;
 
-    async generateMetadata(): Promise<any> {
-        const { hash, attributes } = await this.generateImage();
+    async generateMetadata(): Promise<string> {
+        const { OpenAImage, hash } = await this.generateAndStoreImage();
         const metadata = JSON.stringify({
             description: "Random generated AINFT",
             image: "ipfs://" + hash,
-            name: attributes.class,
+            name: OpenAImage.attributes.class,
             attributes: [{
                 "trait_type": "Class",
-                "value": attributes.class
+                "value": OpenAImage.attributes.class
             }, {
                 "trait_type": "Title",
-                "value": attributes.title
+                "value": OpenAImage.attributes.title
             }, {
                 "trait_type": "Eyes",
-                "value": attributes.eyes
+                "value": OpenAImage.attributes.eyes
             }, {
                 "trait_type": "Hair",
-                "value": attributes.hair
+                "value": OpenAImage.attributes.hair
             }]
         });
-        let cid = await this.IPFSServvice.uploadFileFromData(metadata);
-        console.log(cid);
+        const cid = await this.IPFSServvice.uploadFileFromData(metadata);
+
         return cid.toString();
     }
 
-    private async generateImage(): Promise<any> {
-        //generate images
-        const { url, attributes } = await this.openAiService.generateImage();
-        const hash = await this.storeImage(url);
-
-        return { hash: hash, attributes: attributes };
-    }
-
-    private async storeImage(url: string) {
-        console.log(url);
-        let cid = await this.IPFSServvice.uploadFileFromUrl(url);
-        console.log(cid);
-        return cid;
+    private async generateAndStoreImage(): Promise<{ OpenAImage: IOpenAImage, hash: string }> {
+        const OpenAImage = await this.openAiService.generateImage();
+        const hash = await this.IPFSServvice.uploadFileFromUrl(OpenAImage.url);
+        return { OpenAImage, hash };
     }
 
 

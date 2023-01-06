@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Configuration, OpenAIApi } from "openai";
 import { ATTRIBUTES } from 'src/constants/attributes.const';
 import IAttributes from 'src/interfaces/IAttributes.interface';
+import IOpenAImage from 'src/interfaces/IOpenAImage.interface';
 @Injectable()
 export class OpenaiService {
 
@@ -11,16 +12,11 @@ export class OpenaiService {
         this.openAIApi = new OpenAIApi(new Configuration({ apiKey: process.env.API_KEY }));
     }
 
-    async generateImage(): Promise<any> {
+    async generateImage(): Promise<IOpenAImage> {
         const attributes = this.getRandomAttributes();
-        const prompt = `a legendary ${attributes.title} ${attributes.class} with ${attributes.eyes} eyes and ${attributes.hair} hair with an epic and abstract style`;
-        console.log(prompt);
-
-        const response = await this.openAIApi.createImage({
-            prompt: prompt,
-            n: 1,
-            size: "256x256",
-        });
+        const prompt = `a legendary ${attributes.title} ${attributes.class} with ${attributes.eyes} eyes 
+                        and ${attributes.hair} hair with an epic and abstract style`;
+        const response = await this.openAIApi.createImage({ prompt: prompt, n: 1, size: "256x256", });
 
         return { url: response?.data?.data[0]?.url, prompt: prompt, attributes: attributes };
     }
