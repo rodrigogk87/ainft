@@ -36,9 +36,7 @@ async function callContract() {
 
     let tokens = await contract.getAllTokens();
 
-
-
-    tokens.forEach(async token_id => {
+    for (const token_id of tokens) {
         //call api and set url if token url==""
         const token_uri = await contract.tokenURI(token_id);
         if (token_uri == '') {
@@ -55,7 +53,7 @@ async function callContract() {
                     console.log(error);
                 });
         }
-    });
+    }
 }
 
 init();
