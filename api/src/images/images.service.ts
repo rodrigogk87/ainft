@@ -26,6 +26,9 @@ export class ImagesService {
                 "trait_type": "Class",
                 "value": attributes.class
             }, {
+                "trait_type": "Title",
+                "value": attributes.title
+            }, {
                 "trait_type": "Eyes",
                 "value": attributes.eyes
             }, {

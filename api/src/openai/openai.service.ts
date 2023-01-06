@@ -13,7 +13,7 @@ export class OpenaiService {
 
     async generateImage(): Promise<any> {
         const attributes = this.getRandomAttributes();
-        const prompt = `a legendary ${attributes.class}, ${attributes.eyes} eyes, ${attributes.hair} hair, epic and abstract style`;
+        const prompt = `a legendary ${attributes.title} ${attributes.class} with ${attributes.eyes} eyes and ${attributes.hair} hair with an epic and abstract style`;
         console.log(prompt);
 
         const response = await this.openAIApi.createImage({
@@ -27,6 +27,12 @@ export class OpenaiService {
 
 
     getRandomAttributes(): any {
+        const title = [
+            'god',
+            'ancient',
+            'futuristic',
+            '',
+        ];
         const classes = [
             'orc',
             'troll',
@@ -54,7 +60,8 @@ export class OpenaiService {
         const attributes = {
             class: classes[Math.floor(Math.random() * classes.length)],
             eyes: eyes[Math.floor(Math.random() * eyes.length)],
-            hair: hair[Math.floor(Math.random() * hair.length)]
+            hair: hair[Math.floor(Math.random() * hair.length)],
+            title: title[Math.floor(Math.random() * title.length)],
         };
 
         return attributes;

@@ -45,6 +45,11 @@ function App() {
 
     console.log("minted", tx);
 
+    /*const burn_transaction = await contract.burn(3);
+    let txb = await burn_transaction.wait();
+    const burn_transaction2 = await contract.burn(4);
+    let txb2 = await burn_transaction2.wait();*/
+
     /*
     //preform transaction (get all tokens)
     const get_all_tokens_transaction = await contract.getAllTokens();
