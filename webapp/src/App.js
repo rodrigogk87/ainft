@@ -86,33 +86,6 @@ function App() {
       {image &&
         <img height={"300px"} width={"300px"} src={image}></img>
       }
-      <br></br>Class
-      <select name="class" onChange={(e) => onSelect(e)}>
-        <option value="">select</option>
-        <option value="ogre">Ogre</option>
-        <option value="troll">Troll</option>
-        <option value="angel">Angel</option>
-        <option value="fallen angel">Fallen Angel</option>
-        <option value="fenix">Fanix</option>
-      </select>
-      <br></br>Eyes
-      <select name="eyes" onChange={(e) => onSelect(e)}>
-        <option value="">select</option>
-        <option value="blue">Blue</option>
-        <option value="red">Red</option>
-        <option value="green">Green</option>
-        <option value="black">Black</option>
-        <option value="yellow">Yellow</option>
-      </select>
-      <br></br>Hair
-      <select name="hair" onChange={(e) => onSelect(e)}>
-        <option value="">select</option>
-        <option value="blue">Blue</option>
-        <option value="red">Red</option>
-        <option value="green">Green</option>
-        <option value="black">Black</option>
-        <option value="white">white</option>
-      </select>
       <button onClick={() => mint()}>Mint</button>
     </div>
   );
