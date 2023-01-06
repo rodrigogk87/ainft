@@ -22,7 +22,7 @@ export class OpenaiService {
             size: "256x256",
         });
 
-        return { url: response?.data?.data[0]?.url, prompt: prompt };
+        return { url: response?.data?.data[0]?.url, prompt: prompt, attributes: attributes };
     }
 
 

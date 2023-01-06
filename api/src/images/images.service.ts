@@ -17,20 +17,35 @@ export class ImagesService {
     private imageModel: Model<ImageDocument>;
 
     async generateMetadata(): Promise<any> {
-        const image = await this.generateImage();
-        const metadata = JSON.stringify({ description: "Random generated AINFT", image: "ipfs://" + image.hash, name: "Name", "attributes": [] });
+        const { hash, attributes } = await this.generateImage();
+        const metadata = JSON.stringify({
+            description: "Random generated AINFT",
+            image: "ipfs://" + hash,
+            name: attributes.class,
+            attributes: [{
+                "trait_type": "Class",
+                "value": attributes.class
+            }, {
+                "trait_type": "Eyes",
+                "value": attributes.eyes
+            }, {
+                "trait_type": "Hair",
+                "value": attributes.hair
+            }]
+        });
         let cid = await this.IPFSServvice.uploadFileFromData(metadata);
         console.log(cid);
         return cid.toString();
     }
 
-    private async generateImage(): Promise<Image> {
+    private async generateImage(): Promise<any> {
         //generate images
-        const { url, prompt } = await this.openAiService.generateImage();
+        const { url, prompt, attributes } = await this.openAiService.generateImage();
         const hash = await this.storeImage(url);
         const createdImage = new this.imageModel({ prompt, hash });
+        await createdImage.save();
 
-        return createdImage.save();
+        return { hash: hash, attributes: attributes };
     }
 
     private async storeImage(url: string) {
