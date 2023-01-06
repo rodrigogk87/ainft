@@ -23,22 +23,17 @@ const baseURL = "http://localhost:3000";
 async function checkTokensAndFillUrls() {
     // You can also use an ENS name for the contract address
     const address = "0x2b9d6E6e68073E270e19666DF097e8C9beB6Fb07";
-
-    // The Contract object
     const contract = new ethers.Contract(address, AINFTs.abi, provider);
     const contractWithSigner = contract.connect(signer);
 
     let tokens = await contract.getAllTokens();
 
     for (const token_id of tokens) {
-        //call api and set url if token url==""
         const token_uri = await contract.tokenURI(token_id);
         if (token_uri == '') {
             await axios.get(baseURL + '/images/generate-metadata')
                 .then(async function (response) {
-                    console.log(response);
-                    //mint here, image should have been stored
-                    //setImage(response.data[0]);
+                    console.log('image generated');
                     const url_transaction = await contractWithSigner.setTokenURI(token_id, response.data);
                     let tx = await url_transaction.wait();
                     console.log(tx);
