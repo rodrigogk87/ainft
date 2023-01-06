@@ -20,13 +20,7 @@ const signer = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
 const baseURL = "http://localhost:3000";
 
 
-async function init() {
-    let account = await signer.getAddress();
-
-    console.log(account);
-}
-
-async function callContract() {
+async function checkTokensAndFillUrls() {
     // You can also use an ENS name for the contract address
     const address = "0x2b9d6E6e68073E270e19666DF097e8C9beB6Fb07";
 
@@ -56,5 +50,4 @@ async function callContract() {
     }
 }
 
-init();
-callContract();
+checkTokensAndFillUrls();
